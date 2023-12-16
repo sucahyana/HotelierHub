@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('customer_complaints', function (Blueprint $table) {
-            $table->uuid()->primary();
+            $table->string("id")->primary();
             $table->foreignId('customer_id')->constrained()->cascadeOnDelete();
             $table->text('complaint');
             $table->text('resolution')->nullable();
