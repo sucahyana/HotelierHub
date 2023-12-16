@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('customer_complaints', function (Blueprint $table) {
             $table->string("id")->primary();
-            $table->foreignId('customer_id')->constrained()->cascadeOnDelete();
+            $table->string("customer_id");
             $table->text('complaint');
             $table->text('resolution')->nullable();
             $table->string('status');
             $table->timestamps();
+
+            $table->foreign('customer_id')->references('id')->on('customers')->cascadeOnDelete();
         });
     }
 
