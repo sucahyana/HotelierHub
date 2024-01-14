@@ -12,12 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('customer_complaints', function (Blueprint $table) {
-            $table->uuid()->primary();
-            $table->foreignId('customer_id')->constrained()->cascadeOnDelete();
+            $table->string("id")->primary();
+            $table->string("customer_id");
             $table->text('complaint');
             $table->text('resolution')->nullable();
             $table->string('status');
             $table->timestamps();
+
+            $table->foreign('customer_id')->references('id')->on('customers')->cascadeOnDelete();
         });
     }
 
