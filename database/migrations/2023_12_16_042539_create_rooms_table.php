@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('rooms', function (Blueprint $table) {
-            $table->uuid()->primary();
+            $table->string("id")->primary();
             $table->string("room_number");
             $table->string("type");
             $table->decimal("price",10,2);

@@ -22,7 +22,7 @@ Route::prefix('v1')->group(function () {
     });
 
 // Manajemen Kamar
-    Route::middleware(['auth:sanctum', 'role:admin,kasir_stok'])->group(function () {
+    Route::middleware(['auth:sanctum', 'role:admin,kasir'])->group(function () {
         Route::get('/rooms', [RoomController::class, 'index']);
         Route::post('/rooms', [RoomController::class, 'store']);
         Route::get('/rooms/{room}', [RoomController::class, 'show']);
@@ -31,7 +31,7 @@ Route::prefix('v1')->group(function () {
     });
 
 // Pemesanan
-    Route::middleware(['auth:sanctum', 'role:admin,kasir_pelayanan'])->group(function () {
+    Route::middleware(['auth:sanctum', 'role:admin,kasir'])->group(function () {
         Route::get('/bookings', [BookingController::class, 'index']);
         Route::post('/bookings', [BookingController::class, 'store']);
         Route::get('/bookings/{booking}', [BookingController::class, 'show']);
@@ -40,13 +40,13 @@ Route::prefix('v1')->group(function () {
     });
 
 // Pembayaran
-    Route::middleware(['auth:sanctum', 'role:admin,kasir_pelayanan'])->group(function () {
+    Route::middleware(['auth:sanctum', 'role:admin,kasir'])->group(function () {
         Route::post('/payments', [PaymentController::class, 'store']);
         Route::get('/payments/{payment}', [PaymentController::class, 'show']);
     });
 
 // Keluhan Pelanggan
-    Route::middleware(['auth:sanctum', 'role:admin,kasir_pelayanan'])->group(function () {
+    Route::middleware(['auth:sanctum', 'role:admin,kasir'])->group(function () {
         Route::get('/complaints', [CustomerComplaintController::class, 'index']);
         Route::post('/complaints', [CustomerComplaintController::class, 'store']);
         Route::put('/complaints/{complaint}', [CustomerComplaintController::class, 'update']);
