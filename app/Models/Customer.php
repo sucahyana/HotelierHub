@@ -12,11 +12,15 @@ class Customer extends Model
     public $incrementing = false;
 
     protected $keyType = 'string';
-    protected $fillable = ['name', 'email', 'phone_number', 'address'];
+    protected $fillable = ['name', 'email', 'phone_number', 'address','user_id'];
 
     public function bookings()
     {
         return $this->hasMany(Booking::class);
+    }
+
+    public function user(){
+        return $this->hasOne(User::class);
     }
 
     public function complaints()

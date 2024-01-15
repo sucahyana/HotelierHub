@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
+use App\Models\Role;
+use App\Models\RoleUser;
 use App\Models\User;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
@@ -20,28 +23,77 @@ class AuthController extends Controller
             return $validatorRegisterResult;
         }
 
-        $user = User::create($userRequest);
 
-        if ($user) {
-            return $this->createdResponse(
-                'User created successfully',
-                [
-                    'name' => $user->name,
-                    'username' => $user->username,
-                    'email' => $user->email,
-                ]
-            );
-        } else {
+        $user = User::create([
+            'username' => $userRequest['username'],
+            'email' => $userRequest['email'],
+            'password' => $userRequest['password'],
+        ]);
+
+        if (!$user) {
             return $this->badRequestResponse(
                 'Failed to create user',
                 null,
-                [
-                    'name' => $userRequest['name'],
-                    'username' => $userRequest['username'],
-                    'email' => $userRequest['email'],
-                ]
+                $userRequest
             );
         }
+
+
+        $customer = Customer::create([
+            'user_id' => $user->id,
+            'name' => $userRequest['name'],
+            'email' => $userRequest['email'],
+        ]);
+
+        if (!$customer) {
+
+            $user->delete();
+            return $this->badRequestResponse(
+                'Failed to create customer',
+                null,
+                $userRequest
+            );
+        }
+
+
+        $roleId = Role::where('name', 'User')->first();
+        $role = $roleId->id;
+
+        if (!$role) {
+
+            $user->delete();
+            $customer->delete();
+            return $this->badRequestResponse(
+                'Role "User" not found',
+                null,
+                $userRequest
+            );
+        }
+
+        $roleUser = RoleUser::create([
+            'user_id' => $user->id,
+            'role_id' => $role,
+        ]);
+
+        if (!$roleUser) {
+
+            $user->delete();
+            $customer->delete();
+            return $this->badRequestResponse(
+                'Failed to assign role to user',
+                null,
+                $userRequest
+            );
+        }
+
+        return $this->createdResponse(
+            'User created successfully',
+            [
+                'name' => $user->name,
+                'username' => $user->username,
+                'email' => $user->email,
+            ]
+        );
     }
 
     protected function validatorRegister(Request $request)
@@ -57,11 +109,8 @@ class AuthController extends Controller
             return $this->badRequestResponse(
                 'Validation failed',
                 $validator->errors(),
-                [
-                    'name' => $request['name'],
-                    'username' => $request['username'],
-                    'email' => $request['email'],
-                ]);
+                $request->only('name', 'username', 'email')
+            );
         }
     }
 }

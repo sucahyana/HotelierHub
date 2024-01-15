@@ -6,17 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Webpatser\Uuid\Uuid;
 
-class Role extends Model
+class Admin extends Model
 {
-
     use HasFactory;
+    public $incrementing = false;
+
     protected $keyType = 'string';
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'email', 'phone_number', 'address','super'];
 
-
-    public function roleUser()
-    {
-        return $this->hasMany(RoleUser::class);
+    public function users(){
+        return $this->hasOne(User::class);
     }
     protected static function boot()
     {

@@ -16,7 +16,9 @@ return new class extends Migration
             $table->string("role_id");
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->foreign('role_id')->references('id')->on('roles')->cascadeOnDelete();
-            $table->primary(['user_id', 'role_id']);
+
+
+            $table->timestamps();
         });
     }
 
