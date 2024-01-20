@@ -22,10 +22,7 @@ class LoginFeature
         $user = User::where('username', $username)->first();
 
         if ($user && Hash::check($password, $user->password)) {
-            // Loginkan pengguna
             Auth::login($user);
-
-            // Buat cookie untuk menyimpan token autentikasi
             $token = Auth::user()->createToken('Laravel API')->accessToken;
             setcookie('auth_token', $token, time() + (60 * 60 * 24 * 30), '/');
 
