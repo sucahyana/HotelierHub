@@ -19,9 +19,9 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => ['*', 'http://192.168.1.7:3000', 'localhost'],
 
-    'allowed_origins_patterns' => [],
+    'allowed_origins_patterns' => ['http://192.168.1.7:3000', 'localhost', 'http://localhost:3000'],
 
     'allowed_headers' => ['*'],
 
