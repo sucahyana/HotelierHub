@@ -30,7 +30,7 @@ trait ResponseTrait
         return $this->createResponse(204, true, $message);
     }
 
-    public function badRequestResponse($message, $errors = null, $data=null)
+    public function badRequestResponse($message, $errors = null, $data = null)
     {
         return $this->createResponse(400, false, $message, $data, $errors);
     }
@@ -38,5 +38,10 @@ trait ResponseTrait
     public function notFoundResponse($message = 'Not found')
     {
         return $this->createResponse(404, false, $message);
+    }
+
+    public function serverErrorResponse($message, $errors = null, $data = null)
+    {
+        return $this->createResponse(500, false, $message, $errors, $data);
     }
 }

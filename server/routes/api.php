@@ -18,8 +18,8 @@ use App\Http\Controllers\ReportController;
 Route::prefix('v1')->group(function () {
     Route::prefix('/auth')->group(function () {
         Route::post('/register', [AuthController::class, 'register']); //Done
-        Route::post('/login', [AuthController::class, 'login']);
-        Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+        Route::post('/login', [AuthController::class, 'login'])->name('login');
+        Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum')->name('logout');
     });
 
     // Manajemen Kamar
