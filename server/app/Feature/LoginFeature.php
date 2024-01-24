@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Traits\ResponseTrait;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class LoginFeature
 {
@@ -13,20 +14,28 @@ class LoginFeature
 
     public function login($credentialsRequest)
     {
-        
-        $user = User::where('username', $credentialsRequest['username'])->first();
-        if ($user && $user->tokens->isNotEmpty()) {
-            $user->tokens()->delete();
-        }
+        try {
+            $this->validateLogin($credentialsRequest);
 
-        if (Auth::attempt(['username' => $credentialsRequest['username'], 'password' => $credentialsRequest['password']], true)) {
-            $user = Auth::user();
-            $success['token'] = $user->createToken('MyApp')->plainTextToken;
-            $success['name'] = $user->name;
+            $user = User::where('username', $credentialsRequest['username'])->first();
 
-            return $this->successResponse('User login successfully.', null);
-        } else {
-            return $this->badRequestResponse('error', 'Invalid credentials', null);
+            if ($user && $user->tokens->isNotEmpty()) {
+                $user->tokens()->delete();
+            }
+
+            if (Auth::attempt(['username' => $credentialsRequest['username'], 'password' => $credentialsRequest['password']], true)) {
+                $user->session()->;
+                $success['token'] = $user->createToken('HotelierHub', ['*'], now()->addMonth())->plainTextToken;
+                $success['name'] = $user->name;
+
+                return $this->successResponse('Login berhasil!', $success);
+            } else {
+                return $this->badRequestResponse('Username atau password salah', null, null);
+            }
+        } catch (ValidationException $e) {
+            return $this->badRequestResponse('Data tidak valid', $e->errors(), null);
+        } catch (\Exception $e) {
+            return $this->serverErrorResponse('Terjadi kesalahan server', $e->getMessage(), null); // Berikan detail error untuk debugging
         }
     }
 

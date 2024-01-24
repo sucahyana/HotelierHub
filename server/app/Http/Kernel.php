@@ -42,10 +42,16 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\ThrottleRequests::class . ':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-           
+            
+
 
         ],
     ];
+
+    protected $except = [
+        'api/v1/auth/login',
+    ];
+
 
     /**
      * The application's middleware aliases.
