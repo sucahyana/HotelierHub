@@ -24,11 +24,12 @@ class LoginFeature
             }
 
             if (Auth::attempt(['username' => $credentialsRequest['username'], 'password' => $credentialsRequest['password']], true)) {
-                $user->session()->;
+
                 $success['token'] = $user->createToken('HotelierHub', ['*'], now()->addMonth())->plainTextToken;
                 $success['name'] = $user->name;
+                $userData = $user->all();
 
-                return $this->successResponse('Login berhasil!', $success);
+                return $this->successResponse('Login berhasil!', $userData);
             } else {
                 return $this->badRequestResponse('Username atau password salah', null, null);
             }
