@@ -1,36 +1,32 @@
-import { Button } from "primereact/button";
+import {Button} from "primereact/button";
+import {useNavigate} from "react-router-dom";
 
 
-export const BasicButton = ({ label, className, ...props }) => {
+export const ButtonBasic = ({label, className, ...props}) => {
     return <Button label={label} className={`p-button-primary ${className}`} {...props} />;
 };
 
 
-export const LinkButton = ({ link, label, className, ...props }) => {
-    return <Button link={link} label={label} className={`p-button-link ${className}`} {...props}/>;
+export const ButtonLink = ({ link, label, className, ...props }) => {
+    const navigate = useNavigate();
+
+    const handleClick = (event) => {
+        event.preventDefault();
+        navigate(link, { replace: true });
+    };
+
+    return (
+        <Button onClick={handleClick} label={label} className={`p-button-link ${className}`} {...props} />
+    );
 };
 
-
-export const IconButton = ({ icon, label, className, ...props }) => {
+export const ButtonIcon = ({icon, label, className, ...props}) => {
     return (
         <Button icon={icon} label={label} className={`p-button-raised  p-button-text ${className}`} {...props} />
     );
 };
 
-
-// export const LoadingButton = ({ label, loading, className, ...props }) => {
-//     return (
-//         <Button
-//             label={loading ? <CircularProgress size={24} /> : label}
-//             className={`p-button-primary ${className}`}
-//             disabled={loading}
-//             {...props}
-//         />
-//     );
-// };
-
-
-export const SeverityButton = ({ label, severity, className, ...props }) => {
+export const ButtonSeverity = ({label, severity, className, ...props}) => {
     const severityClass = {
         success: "p-button-success",
         warning: "p-button-warning",
@@ -40,11 +36,11 @@ export const SeverityButton = ({ label, severity, className, ...props }) => {
     return <Button label={label} className={`${severityClass} ${className}`} {...props} />;
 };
 
-export const DisabledButton = ({ label, className, ...props }) => {
-    return <Button label={label} className={`p-button-primary p-disabled ${className}`} {...props} disabled />;
+export const ButtonDisabled = ({label, className, ...props}) => {
+    return <Button label={label} className={`p-button-primary p-disabled ${className}`} {...props} disabled/>;
 };
 
-export const BadgeButton = ({ label, badge, className, ...props }) => {
+export const ButtonBadge = ({label, badge, className, ...props}) => {
     return (
         <Button label={label} className={`p-button-primary ${className}`}>
             <span className="p-badge">{badge}</span>
@@ -53,6 +49,6 @@ export const BadgeButton = ({ label, badge, className, ...props }) => {
 };
 
 
-export const ButtonSet = ({ children, className, ...props }) => {
+export const ButtonSet = ({children, className, ...props}) => {
     return <div className={`p-buttonset ${className}`} {...props}>{children}</div>;
 };
