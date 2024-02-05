@@ -1,4 +1,5 @@
 import {InputText} from "primereact/inputtext";
+import {AutoComplete} from "primereact/autocomplete";
 
 export const InputLarge = ({classname, ...props}) => {
     return (
@@ -26,6 +27,16 @@ export const InputSmall = ({classname, ...props}) => {
                    }}/>
     );
 };
+
+export const InputAutoComplete = ({classname, ...props}) => {
+    return (
+        <AutoComplete className={`${classname} p-inputtext-lg rounded-[8px] text-lg rounded-sm text-ui-950`} {...props}
+                      pt={{
+                          root: {className: 'focus:shadow-[0_0_0_0.2rem_rgba(255,162,200,1)]'}
+                      }}/>
+    );
+};
+
 
 
 

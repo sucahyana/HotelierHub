@@ -61,8 +61,8 @@ class RegisterFeature
     protected function validatorRegister($request)
     {
         $validator = Validator::make($request, [
-            'name' => 'required|string|max:255',
-            'username' => 'required|string|max:255|unique:users,username',
+            'name' => 'required|string|max:255|min:3',
+            'username' => 'required|string|max:255|min:3|unique:users,username',
             'email' => 'required|string|max:255|unique:users,email',
             'password' => 'required|string|max:255|min:8',
         ]);

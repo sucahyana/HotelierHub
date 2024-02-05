@@ -2,9 +2,9 @@ import React from "react";
 
 import { ButtonLink } from "../Atoms/ButtonPrime";
 import NuansaLogo from "../../assets/Nuansa-Logo.png";
-import LoginForm from "../Molecules/LoginForm";
 import SocialAuthButtons from "../Molecules/SocialAuthButtons";
 import {useSpring,animated} from "@react-spring/web";
+import RegisterForm from "../Molecules/RegisterForm";
 
 const RegisterCard = () => {
     const slideInAnimation = useSpring({
@@ -22,7 +22,7 @@ const RegisterCard = () => {
                 <h1 className="text-2xl text-white xl:text-3xl font-extrabold text-shadow-sm text-shadow-ui-500/10">
                     Register Account
                 </h1>
-                <LoginForm/>
+                <RegisterForm/>
                 <SocialAuthButtons/>
                 <div
                     className=" px-2 text-base text-white  font-normal my-2"

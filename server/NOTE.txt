@@ -1,3 +1,5 @@
 1. package untuk generate uuid webpatser/laravel-uuid
 2. Laravel Sanctum untuk Auth
-3.
+3.prime react
+4. formik
+5. yup
