@@ -25,6 +25,9 @@ module.exports = {
 
         },
     },
-    plugins: [],
+    plugins: [
+        require('tailwindcss-animated'),
+        require("@designbycode/tailwindcss-text-shadow"),
+    ],
 }
 

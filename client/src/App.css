@@ -13,6 +13,24 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+@keyframes wiggle {
+  0%, 100% {
+    transform: translate(-50%, -50%) rotate(-3deg);
+  }
+  50% {
+    transform: translate(-50%, -50%) rotate(3deg);
+  }
+}
+
+@keyframes wiggle-more {
+  0%, 100% {
+    transform: translate(-50%, -50%) rotate(-5deg);
+  }
+  50% {
+    transform: translate(-50%, -50%) rotate(5deg);
+  }
+}
+
 
 .App-header {
   background-color: #282c34;
