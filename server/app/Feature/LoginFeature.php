@@ -23,13 +23,13 @@ class LoginFeature
                 $user->tokens()->delete();
             }
 
-            if (Auth::attempt(['username' => $credentialsRequest['username'], 'password' => $credentialsRequest['password']], true)) {
+            if (Auth::attempt(['username' => $credentialsRequest['username'], 'password' => $credentialsRequest['password']],$credentialsRequest->has('remember'))) {
 
-                $success['token'] = $user->createToken('HotelierHub', ['*'], now()->addMonth())->plainTextToken;
-                $success['name'] = $user->name;
-                $userData = $user->all();
+                $user = Auth::user();
+                $credentialsRequest->session()->put('user', $user);
 
-                return $this->successResponse('Login berhasil!', $userData);
+
+                return $this->successResponse('Login berhasil!', $user)->header('Access-Control-Allow-Credentials', 'true');
             } else {
                 return $this->badRequestResponse('Username atau password salah', null, null);
             }
