@@ -3,3 +3,5 @@
 3.prime react
 4. formik
 5. yup
+npm install redux react-redux redux-thunk redux-devtools-extension react-auth-kit axios
+

@@ -8,6 +8,7 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CustomerComplaintController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,11 @@ Route::prefix('v1')->group(function () {
         Route::post('/register', [AuthController::class, 'register']); //Done
         Route::post('/login', [AuthController::class, 'login'])->name('login');
         Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum')->name('logout');
+    });
+
+    Route::middleware(['auth:sanctum'])->group(function () {
+        Route::get('/user', [UserController::class, 'profile']);
+        Route::post('/user', [RoomController::class, 'update']);
     });
 
     // Manajemen Kamar

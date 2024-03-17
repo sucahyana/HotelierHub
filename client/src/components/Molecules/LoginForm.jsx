@@ -4,6 +4,7 @@ import {ButtonIcon, ButtonLink} from "../Atoms/ButtonPrime";
 import {SiGnuprivacyguard} from "react-icons/si";
 import React, {useRef, useState} from "react";
 import {login} from "../../services/AuthService";
+import {redirect, useNavigate} from "react-router-dom";
 
 
 const LoginForm = () => {
@@ -12,6 +13,7 @@ const LoginForm = () => {
     const [error, setError] = useState(null);
     const toast = useRef(null);
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
     const handleSubmit = async (event) => {
         event.preventDefault();
         setLoading(true);
@@ -21,6 +23,7 @@ const LoginForm = () => {
             toast.current.showSuccess('Success', 'Anda berhasil masuk');
             console.log('Response:', response);
             setLoading(false);
+
         } catch (error) {
             setError("Username atau password salah");
             console.error('Error:', error);
